@@ -30,14 +30,17 @@ def go(args):
     # Drop the duplicates
     logger.info("Dropping duplicates")
     df = df.drop_duplicates().reset_index(drop=True)
-    # numeric_columns = df.select_dtypes(include=['number']).columns
+    numeric_columns = df.select_dtypes(include=['number']).columns
     # # fill 0 to all NaN
-    # df[numeric_columns] = df[numeric_columns].fillna(0)
+    df[numeric_columns] = df[numeric_columns].fillna(0)
 
     min_price = float(args.min_price)
     max_price = float(args.max_price)
     idx = df['price'].between(min_price, max_price)
-    df = df[idx]
+    df = df[idx].copy()
+
+    idx = df['longitude'].between(-74.25, -73.50) & df['latitude'].between(40.5, 41.2)
+    df = df[idx].copy()
 
     filename = "cleaned_data.csv"
     df.to_csv(filename, index=False)
