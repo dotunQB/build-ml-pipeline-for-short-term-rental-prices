@@ -565,8 +565,7 @@ Then commit your change, make a new release (for example ``1.0.1``) and retry (o
 you have trained your new model on the new data.
 
 ## Submission Details
-
-## License
 Repo for runs can be found [here](https://wandb.ai/oladotun-opasina/nyc_airbnb/)
 
+## License
 [License](LICENSE.txt)
