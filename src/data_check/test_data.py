@@ -4,7 +4,6 @@ import scipy.stats
 
 
 def test_column_names(data):
-
     expected_colums = [
         "id",
         "name",
@@ -31,7 +30,6 @@ def test_column_names(data):
 
 
 def test_neighborhood_names(data):
-
     known_names = ["Bronx", "Brooklyn", "Manhattan", "Queens", "Staten Island"]
 
     neigh = set(data['neighbourhood_group'].unique())
@@ -59,7 +57,16 @@ def test_similar_neigh_distrib(data: pd.DataFrame, ref_data: pd.DataFrame, kl_th
 
     assert scipy.stats.entropy(dist1, dist2, base=2) < kl_threshold
 
+def test_row_count(data: pd.DataFrame):
+    """
+    Test row count to be greater than a specific number
+    """
+    assert 15000 < data.shape[0] < 1000000
 
-########################################################
-# Implement here test_row_count and test_price_range   #
-########################################################
+
+def test_price_range(data: pd.DataFrame, min_price: float, max_price: float):
+    """
+    Test that price range is between min and max price
+    """
+    idx = data["price"].between(min_price, max_price)
+    assert np.sum(~idx) == 0
